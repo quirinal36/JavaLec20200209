@@ -14,7 +14,7 @@ public class MainClass {
 
 			@Override
 			public void run() {
-				Calc calc = new Calc("계산기");
+				FilePractice calc = new FilePractice("입출력");
 			}
 		});
 		
