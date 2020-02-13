@@ -12,6 +12,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import www.jca.com.week11.FileController;
+
 public class FilePractice extends JFrame implements ActionListener {
 	JButton insertButton;
 	JButton showButton;
@@ -45,10 +47,17 @@ public class FilePractice extends JFrame implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		final String title = "javalec.txt";
+		
 		if(e.getSource() == insertButton){
-			JOptionPane.showMessageDialog(this, "입력되었습니다.");
+			final String content = textField.getText();
+			FileController control = new FileController();
+			control.writeFile(title, content);
+			
 		}else if(e.getSource() == showButton) {
-			String txt = textField.getText();
+			FileController control = new FileController();
+			String txt = control.readFile(title);
+			
 			JLabel label = new JLabel(txt);
 			
 			JPanel mainPanel = (JPanel)getContentPane().getComponent(0);
