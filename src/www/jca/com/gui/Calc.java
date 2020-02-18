@@ -97,8 +97,9 @@ public class Calc extends JFrame implements ActionListener{
 		padPanel.add(buttonMulti);
 		buttonMulti.addActionListener(this);
 		
-		JButton buttonEmpty = new JButton("!");
-		padPanel.add(buttonEmpty);
+		JButton buttonFactorial = new JButton("!");
+		buttonFactorial.addActionListener(this);
+		padPanel.add(buttonFactorial);
 		
 		JButton button0 = new JButton("0");
 		padPanel.add(button0);
@@ -119,6 +120,8 @@ public class Calc extends JFrame implements ActionListener{
 		String text = ((JButton)e.getSource()).getText();
 		char btnChar = text.charAt(0);
 		int intValBtnText = (int)btnChar;
+		
+		System.out.println("intValBtnText: " + intValBtnText);
 		
 		if(intValBtnText >= 48 && intValBtnText<=57) {
 			// 숫자 클릭되었을 때
@@ -150,6 +153,10 @@ public class Calc extends JFrame implements ActionListener{
 			}
 		}else if(intValBtnText == 33) {
 			// 실습: 팩토리얼 계산결과 출력하기
+			operand1 = Integer.parseInt(labelTxt);
+			int result = 1;
+			
+			consoleLabel.setText(String.valueOf(result));
 		}else {	
 			System.out.println("else");
 			// 연산기호 "+", "-", "*"
