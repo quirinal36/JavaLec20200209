@@ -12,15 +12,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Calc extends JFrame implements ActionListener{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4691869111582076256L;
-	char operator;
-	int operand1;
-	int operand;
+	char operator;			// 계산하기위한 기호
+	int operand1;			// 첫번째 숫자
+	int operand;			// 두번째 숫자
 	
-	JLabel consoleLabel;
+	JLabel consoleLabel;	// 계산기화면
 	
 	public Calc(String title) {
 		int x = 200;
@@ -34,18 +30,25 @@ public class Calc extends JFrame implements ActionListener{
 		JPanel mainPanel = new JPanel(new BorderLayout());
 		getContentPane().add(mainPanel);
 		
-		JPanel consolePanel = new JPanel();
-		consolePanel.setPreferredSize(new Dimension(600, 100));
-		mainPanel.add(consolePanel, BorderLayout.NORTH);
+		JPanel consolePanel = new JPanel();								// 글자 출력화면
+		consolePanel.setPreferredSize(new Dimension(600, 100));			// 가로, 세로 크기
+		mainPanel.add(consolePanel, BorderLayout.NORTH);				// 출력 화면을 가장 북쪽에 배치
 		
 		consoleLabel = new JLabel();
-		consoleLabel.setHorizontalAlignment(JLabel.CENTER);
-		consoleLabel.setFont(consoleLabel.getFont().deriveFont(50f));
+		consoleLabel.setHorizontalAlignment(JLabel.CENTER);				// 가로 가운데정렬
+		consoleLabel.setFont(consoleLabel.getFont().deriveFont(50f));	// 글자크기
 		consolePanel.add(consoleLabel);
 		
-		JPanel padPanel = new JPanel(new GridLayout(4,4));
-		mainPanel.add(padPanel, BorderLayout.CENTER);
+		JPanel buttonView = new JPanel(new GridLayout(4,4));			// 버튼뷰
+		mainPanel.add(buttonView, BorderLayout.CENTER);					// 가운데에 배치
 		
+		settingButtons(buttonView);
+		
+		setVisible(true);
+	}
+	
+	
+	private void settingButtons(JPanel padPanel) {
 		JButton button7 = new JButton("7");
 		button7.addActionListener(this);
 		padPanel.add(button7, 0);
@@ -94,7 +97,7 @@ public class Calc extends JFrame implements ActionListener{
 		padPanel.add(buttonMulti);
 		buttonMulti.addActionListener(this);
 		
-		JButton buttonEmpty = new JButton();
+		JButton buttonEmpty = new JButton("!");
 		padPanel.add(buttonEmpty);
 		
 		JButton button0 = new JButton("0");
@@ -108,23 +111,23 @@ public class Calc extends JFrame implements ActionListener{
 		JButton buttonEqual = new JButton("=");
 		padPanel.add(buttonEqual);
 		buttonEqual.addActionListener(this);
-		
-		setVisible(true);
 	}
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		String labelTxt = consoleLabel.getText();
+
 		String text = ((JButton)e.getSource()).getText();
 		char btnChar = text.charAt(0);
 		int intValBtnText = (int)btnChar;
 		
-		String labelTxt = consoleLabel.getText();
-		
 		if(intValBtnText >= 48 && intValBtnText<=57) {
-			// 숫자
+			// 숫자 클릭되었을 때
 			labelTxt += text;
+			
+			System.out.println(text);
+			
 			consoleLabel.setText(labelTxt);
-		}else if(intValBtnText == 61){
+		} else if(intValBtnText == 61){		// "=" 눌렸을 때
 			// 계산
 			int result = 0;
 			switch(operator) {
@@ -140,13 +143,16 @@ public class Calc extends JFrame implements ActionListener{
 			}
 			
 			consoleLabel.setText(String.valueOf(result));
-		}else if(intValBtnText == 60){
+		}else if(intValBtnText == 60){		// "<" 눌렸을 때 : 글자 한개 삭제하기
 			if(labelTxt.length() > 0) {
 				labelTxt = labelTxt.substring(0, labelTxt.length()-1);
 				consoleLabel.setText(labelTxt);
 			}
-		}else {
-			// 연산기호
+		}else if(intValBtnText == 33) {
+			// 실습: 팩토리얼 계산결과 출력하기
+		}else {	
+			System.out.println("else");
+			// 연산기호 "+", "-", "*"
 			operator = btnChar;
 			operand1 = Integer.parseInt(labelTxt);
 			consoleLabel.setText("");
