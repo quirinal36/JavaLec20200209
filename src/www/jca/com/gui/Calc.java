@@ -39,7 +39,7 @@ public class Calc extends JFrame implements ActionListener{
 		consoleLabel.setFont(consoleLabel.getFont().deriveFont(50f));	// 글자크기
 		consolePanel.add(consoleLabel);
 		
-		JPanel buttonView = new JPanel(new GridLayout(4,4));			// 버튼뷰
+		JPanel buttonView = new JPanel(new GridLayout(5,4));			// 버튼뷰
 		mainPanel.add(buttonView, BorderLayout.CENTER);					// 가운데에 배치
 		
 		settingButtons(buttonView);
@@ -112,6 +112,10 @@ public class Calc extends JFrame implements ActionListener{
 		JButton buttonEqual = new JButton("=");
 		padPanel.add(buttonEqual);
 		buttonEqual.addActionListener(this);
+		
+		JButton buttonBinary = new JButton("@");
+		padPanel.add(buttonBinary);
+		buttonBinary.addActionListener(this);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -119,6 +123,7 @@ public class Calc extends JFrame implements ActionListener{
 
 		String text = ((JButton)e.getSource()).getText();
 		char btnChar = text.charAt(0);
+		System.out.println("btnChar: " + btnChar);
 		int intValBtnText = (int)btnChar;
 		
 		System.out.println("intValBtnText: " + intValBtnText);
@@ -157,6 +162,12 @@ public class Calc extends JFrame implements ActionListener{
 			int result = 1;
 			
 			consoleLabel.setText(String.valueOf(result));
+		}else if(intValBtnText == 64) {
+			// 10진수를 2진수로 변환하기
+			operand1 = Integer.parseInt(labelTxt);
+			int binary[] = new int[4];
+			int i=0;
+			
 		}else {	
 			System.out.println("else");
 			// 연산기호 "+", "-", "*"
