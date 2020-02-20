@@ -1,22 +1,32 @@
 package www.jca.com.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public class Calc extends JFrame implements ActionListener{
 	char operator;			// 계산하기위한 기호
 	int operand1;			// 첫번째 숫자
-	int operand;			// 두번째 숫자
 	
 	JLabel consoleLabel;	// 계산기화면
+	
+	String[] btnTextArray = {
+							"7","8","9","+",
+							"4","5","6","-",
+							"1","2","3","*",
+							"!","0","<","=",
+							"@","#"
+							};
 	
 	public Calc(String title) {
 		int x = 200;
@@ -32,11 +42,12 @@ public class Calc extends JFrame implements ActionListener{
 		
 		JPanel consolePanel = new JPanel();								// 글자 출력화면
 		consolePanel.setPreferredSize(new Dimension(600, 100));			// 가로, 세로 크기
+		consolePanel.setBackground(Color.WHITE);
+		
 		mainPanel.add(consolePanel, BorderLayout.NORTH);				// 출력 화면을 가장 북쪽에 배치
 		
-		consoleLabel = new JLabel();
-		consoleLabel.setHorizontalAlignment(JLabel.CENTER);				// 가로 가운데정렬
-		consoleLabel.setFont(consoleLabel.getFont().deriveFont(50f));	// 글자크기
+		consoleLabel = new JLabel("4");
+		consoleLabel.setFont(consoleLabel.getFont().deriveFont(30f));	// 글자크기
 		consolePanel.add(consoleLabel);
 		
 		JPanel buttonView = new JPanel(new GridLayout(5,4));			// 버튼뷰
@@ -48,94 +59,41 @@ public class Calc extends JFrame implements ActionListener{
 	}
 	
 	
+	
+	/**
+	 * padPanel 위에 버튼을 만든다.
+	 * @param padPanel
+	 */
 	private void settingButtons(JPanel padPanel) {
-		JButton button7 = new JButton("7");
-		button7.addActionListener(this);
-		padPanel.add(button7, 0);
-		
-		JButton button8 = new JButton("8");
-		button8.addActionListener(this);
-		padPanel.add(button8);
-		
-		JButton button9 = new JButton("9");
-		padPanel.add(button9);
-		button9.addActionListener(this);
-		
-		JButton buttonPlus = new JButton("+");
-		padPanel.add(buttonPlus);
-		buttonPlus.addActionListener(this);
-		
-		JButton button4 = new JButton("4");
-		padPanel.add(button4);
-		button4.addActionListener(this);
-		
-		JButton button5 = new JButton("5");
-		padPanel.add(button5);
-		button5.addActionListener(this);
-		
-		JButton button6 = new JButton("6");
-		padPanel.add(button6);
-		button6.addActionListener(this);
-		
-		JButton buttonMinus = new JButton("-");
-		padPanel.add(buttonMinus);
-		buttonMinus.addActionListener(this);
-		
-		JButton button1 = new JButton("1");
-		padPanel.add(button1);
-		button1.addActionListener(this);
-		
-		JButton button2 = new JButton("2");
-		padPanel.add(button2);
-		button2.addActionListener(this);
-		
-		JButton button3 = new JButton("3");
-		padPanel.add(button3);
-		button3.addActionListener(this);
-		
-		JButton buttonMulti = new JButton("*");
-		padPanel.add(buttonMulti);
-		buttonMulti.addActionListener(this);
-		
-		JButton buttonFactorial = new JButton("!");
-		buttonFactorial.addActionListener(this);
-		padPanel.add(buttonFactorial);
-		
-		JButton button0 = new JButton("0");
-		padPanel.add(button0);
-		button0.addActionListener(this);
-		
-		JButton buttonBack = new JButton("<");
-		padPanel.add(buttonBack);
-		buttonBack.addActionListener(this);
-		
-		JButton buttonEqual = new JButton("=");
-		padPanel.add(buttonEqual);
-		buttonEqual.addActionListener(this);
-		
-		JButton buttonBinary = new JButton("@");
-		padPanel.add(buttonBinary);
-		buttonBinary.addActionListener(this);
+		for(String text : btnTextArray) {
+			JButton btn = new JButton(text);
+			btn.addActionListener(this);
+			padPanel.add(btn);
+		}
 	}
+	
+	/**
+	 * 클릭 되었을 때 이벤트
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String labelTxt = consoleLabel.getText();
-
-		String text = ((JButton)e.getSource()).getText();
-		char btnChar = text.charAt(0);
-		System.out.println("btnChar: " + btnChar);
-		int intValBtnText = (int)btnChar;
+		System.out.println("버튼이 클릭 되었어요!!");
+		String labelTxt = consoleLabel.getText();			// 현재 화면에 표시되어있는 숫자
 		
+		String text = ((JButton)e.getSource()).getText();	// 방금 입력된 숫자 (또는 기호)
+		char btnChar = text.charAt(0);						// 숫자(기호)를 char 자료형으로 치환
+		System.out.println("btnChar: " + btnChar);
+		int intValBtnText = (int)btnChar;					// 숫자(기호)를 char 자료형으로 치환한것을 int형으로 변환
 		System.out.println("intValBtnText: " + intValBtnText);
 		
-		if(intValBtnText >= 48 && intValBtnText<=57) {
+		if(intValBtnText >= 48 && intValBtnText<=57) {		// 0,1,2,3,4,5,6,7,8,9 일 때
 			// 숫자 클릭되었을 때
 			labelTxt += text;
 			
 			System.out.println(text);
 			
 			consoleLabel.setText(labelTxt);
-		} else if(intValBtnText == 61){		// "=" 눌렸을 때
+		} else if(intValBtnText == 61){						// "=" 눌렸을 때
 			// 계산
 			int result = 0;
 			switch(operator) {
@@ -150,27 +108,35 @@ public class Calc extends JFrame implements ActionListener{
 				break;
 			}
 			
-			consoleLabel.setText(String.valueOf(result));
-		}else if(intValBtnText == 60){		// "<" 눌렸을 때 : 글자 한개 삭제하기
-			if(labelTxt.length() > 0) {
+			consoleLabel.setText(String.valueOf(result));	// 계산 결과를 화면에 반영
+			
+		}else if(intValBtnText == 60){						// "<" 눌렸을 때 : consoleLabel 에서 글자 한개 삭제하기
+			if(labelTxt.length() > 0) {						// 지워야할 글자가 없을경우 실행하면 오류가 발생하기 때문에
 				labelTxt = labelTxt.substring(0, labelTxt.length()-1);
 				consoleLabel.setText(labelTxt);
 			}
-		}else if(intValBtnText == 33) {
-			// 실습: 팩토리얼 계산결과 출력하기
+		}else if(intValBtnText == 33) {						// "!" 클릭 했을 때
+			/** 
+			 * TODO : 실습1: 팩토리얼 계산결과 출력하기
+			 */
 			operand1 = Integer.parseInt(labelTxt);
-			int result = 1;
-			
-			consoleLabel.setText(String.valueOf(result));
-		}else if(intValBtnText == 64) {
-			// 10진수를 2진수로 변환하기
+			System.out.println(operand1 + " 의 팩토리얼을 계산 해주세요.");
+			consoleLabel.setText(String.valueOf(new FactorialPractice().factorial(operand1)));
+		}else if(intValBtnText == 64) {						// "@" 클릭 했을 때
+			/**
+			 * TODO: 실습3: 10진수를 2진수로 변환하기
+			 */
 			operand1 = Integer.parseInt(labelTxt);
-			int binary[] = new int[4];
-			int i=0;
-			
-		}else {	
-			System.out.println("else");
-			// 연산기호 "+", "-", "*"
+			System.out.println(operand1 +"를 2진수로 변환한 결과를 계산 해주세요.");
+			consoleLabel.setText(Arrays.toString(new BinaryPractice().decimalToBinary(operand1)));
+		}else if(intValBtnText == 35) {		// "#" 클릭 했을 때
+			/**
+			 * TODO: 실습2: 입력받은 수까지 합계를 출력
+			 */
+			operand1 = Integer.parseInt(labelTxt);
+			System.out.println("1~" + operand1 +"까지의 합계를 계산 해주세요.");
+			consoleLabel.setText(String.valueOf(new SumPractice().sumFor(operand1)));
+		}else {		// 연산기호 "+", "-", "*"
 			operator = btnChar;
 			operand1 = Integer.parseInt(labelTxt);
 			consoleLabel.setText("");

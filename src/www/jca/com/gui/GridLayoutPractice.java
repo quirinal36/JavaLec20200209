@@ -22,15 +22,14 @@ public class GridLayoutPractice extends JFrame {
 		JButton btn1= new JButton("버튼1");
 		JButton btn2= new JButton("버튼2");
 		JButton btn3= new JButton("버튼3");
-		
 		JButton btn4= new JButton("버튼4");
+		
 		JButton btn5= new JButton("버튼5");
 		JButton btn6= new JButton("버튼6");
-		
 		JButton btn7= new JButton("버튼7");
 		JButton btn8= new JButton("버튼8");
-		JButton btn9= new JButton("버튼9");
 		
+		JButton btn9= new JButton("버튼9");
 		JButton btn10= new JButton("버튼10");
 		JButton btn11= new JButton("버튼11");
 		JButton btn12= new JButton("버튼12");
