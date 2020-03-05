@@ -31,5 +31,4 @@ public class BubbleSort implements SortingInterface<Integer> {
 	public String print() {
 		return Arrays.toString(this.array);
 	}
-
 }
